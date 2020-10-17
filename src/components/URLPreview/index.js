@@ -2,26 +2,37 @@ import React from 'react';
 
 import './styles.css';
 
-const URLPreview = () => (
+const URLPreview = ({
+  preview: {
+    url,
+    title,
+    image,
+    description,
+  },
+}) => (
   <a
-    href="/"
+    href={url}
+    targe="_blank"
     className="url-preview"
+    rel="noopener noreferrer"
   >
     <article>
-      <img
-        src="https://picsum.photos/100"
-        alt=""
-      />
+      {image && (
+        <img
+          className="url-preview__image"
+          src={image}
+          alt=""
+        />
+      )}
       <div className="url-preview__info">
         <p className="url-preview__info-title">
-          TitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitleTitle
+          {title}
         </p>
         <p className="url-preview__info-description">
-          DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
-          DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription
+          {description}
         </p>
         <p className="url-preview__info-link">
-          www.example.com
+          {url}
         </p>
       </div>
     </article>

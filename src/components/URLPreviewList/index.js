@@ -1,16 +1,19 @@
 import React from 'react';
+import { map } from 'lodash';
 
 import URLPreview from '../URLPreview';
 import './styles.css';
 
-const URLPreviewList = () => (
+const URLPreviewList = ({ previews }) => (
   <ul className="url-preview-list">
-    <li className="url-preview-list__item">
-      <URLPreview />
-    </li>
-    <li className="url-preview-list__item">
-      <URLPreview />
-    </li>
+    {map(previews, preview => (
+      <li
+        key={preview.url}
+        className="url-preview-list__item"
+      >
+        <URLPreview preview={preview} />
+      </li>
+    ))}
   </ul>
 );
 

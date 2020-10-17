@@ -3,3 +3,7 @@
   margin: auto;
   margin-top: 50px;
 }
+
+.app__title {
+  text-align: center;
+}
