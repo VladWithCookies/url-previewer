@@ -1,0 +1,38 @@
+.url-preview {
+  display: block;
+  color: #000000;
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.url-preview article {
+  height: 100px;
+  display: flex;
+}
+
+.url-preview__info {
+  padding: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.url-preview__info-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.url-preview__info-description {
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.url-preview__info-link {
+  color: #708090;
+  margin: 0;
+}
