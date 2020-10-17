@@ -1,37 +1,61 @@
-import React from 'react';
-import getUrlMetadata from 'url-metadata';
-import { debounce, map, uniq } from 'lodash';
+import React, { useState, useCallback, useEffect } from 'react';
+import { debounce, map, uniq, reduce, pick } from 'lodash';
+import getMetadata from 'url-metadata';
 
 import { URL_REGEX, PROXY_URL } from '../../constants';
-import getPreviewData from '../../utils/getPreviewData';
+import parseUrlPreviews from '../../utils/parseUrlPreviews';
+import parseHost from '../../utils/parseHost';
 import TextareaField from '../TextareaField';
 import URLPreviewList from '../URLPreviewList';
 import Loader from '../Loader';
 import './styles.css';
 
 const App = () => {
-  const [isLoading, setLoading] = React.useState(false);
-  const [previews, setPreviews] = React.useState([]);
+  const [hosts, setHosts] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const [previewsCache, setPreviewsCache] = useState({});
+  const previews = pick(previewsCache, JSON.parse(hosts));
 
-  const getPreviews = async (value) => {
-    const urls = value.match(URL_REGEX) || [];
-    const promises = map(uniq(urls), (url) => getUrlMetadata(`${PROXY_URL}/${url}`));
+  useEffect(() => {
+    const fetchPreviews = async () => {
+      const parsedHosts = JSON.parse(hosts);
 
-    setLoading(true);
+      const promises = reduce(parsedHosts, (accumulator, host) => {
+        if (!previewsCache[host]) {
+          const promise = getMetadata(`${PROXY_URL}/${host}`);
 
-    const metadata = await Promise.all(promises);
+          accumulator.push(promise);
+        }
 
-    setLoading(false);
+        return accumulator;
+      }, []);
 
-    const previews = getPreviewData(metadata);
+      setLoading(true);
 
-    setPreviews(previews);
-  };
+      try {
+        const metadata = await Promise.all(promises);
+        const previews = parseUrlPreviews(metadata);
 
-  const debouncedGetPreviews = React.useCallback(debounce(getPreviews, 500), []);
+        setPreviewsCache(state => ({ ...state, ...previews }));
+      } catch (error) {
+        console.log('Sorry, but something went wrong: ', error);
+      }
 
-  const handleChange = (event) => {
-    debouncedGetPreviews(event.target.value)
+      setLoading(false);
+    }
+
+    fetchPreviews();
+  }, [hosts]);
+
+  const debouncedHandleChange =  useCallback(debounce(value => {
+    const urls = value.match(URL_REGEX);
+    const hosts = uniq(map(urls, parseHost));
+
+    setHosts(JSON.stringify(hosts))
+  }, 500), []);
+
+  const handleChange = ({ target: { value }}) => {
+    debouncedHandleChange(value);
   }
 
   return (
@@ -40,7 +64,8 @@ const App = () => {
         URL Previewer
       </h1>
       <TextareaField onChange={handleChange} />
-      {isLoading ? <Loader /> : <URLPreviewList previews={previews} />}
+      <URLPreviewList previews={previews} />
+      {isLoading && <Loader />}
     </div>
   );
 }

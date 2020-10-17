@@ -8,7 +8,7 @@ const URLPreviewList = ({ previews }) => (
   <ul className="url-preview-list">
     {map(previews, preview => (
       <li
-        key={preview.url}
+        key={preview.host}
         className="url-preview-list__item"
       >
         <URLPreview preview={preview} />

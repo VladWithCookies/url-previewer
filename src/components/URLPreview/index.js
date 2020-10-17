@@ -4,26 +4,24 @@ import './styles.css';
 
 const URLPreview = ({
   preview: {
-    url,
+    host,
     title,
     image,
     description,
   },
 }) => (
   <a
-    href={url}
-    targe="_blank"
+    href={`https://${host}`}
+    target="_blank"
     className="url-preview"
     rel="noopener noreferrer"
   >
     <article>
-      {image && (
-        <img
-          className="url-preview__image"
-          src={image}
-          alt=""
-        />
-      )}
+      <img
+        className="url-preview__image"
+        src={image}
+        alt=""
+      />
       <div className="url-preview__info">
         <p className="url-preview__info-title">
           {title}
@@ -32,7 +30,7 @@ const URLPreview = ({
           {description}
         </p>
         <p className="url-preview__info-link">
-          {url}
+          {host}
         </p>
       </div>
     </article>
