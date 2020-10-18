@@ -3,9 +3,7 @@ import React from 'react';
 import './styles.css';
 
 const Loader = () => (
-  <p className="loader">
-    Loading...
-  </p>
+  <div className="loader" />
 );
 
 export default Loader;

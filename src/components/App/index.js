@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { debounce, map, uniq, reduce, pick } from 'lodash';
+import { debounce, map, uniq, reduce, pick, isEmpty } from 'lodash';
 import getMetadata from 'url-metadata';
 
 import { URL_REGEX, PROXY_URL } from '../../constants';
@@ -61,8 +61,11 @@ const App = () => {
       <h1 className="app__title">
         URL Previewer
       </h1>
-      <TextareaField onChange={handleChange} />
-      <URLPreviewList previews={previews} />
+      <TextareaField
+        onChange={handleChange}
+        placeholder="Fill in some URL. For example: https://www.airbnb.com"
+      />
+      {!isEmpty(previews) && <URLPreviewList previews={previews} />}
       {isLoading && <Loader />}
     </div>
   );

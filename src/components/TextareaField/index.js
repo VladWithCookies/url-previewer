@@ -2,19 +2,14 @@ import React from 'react';
 
 import './styles.css';
 
-const TextareaField = ({ onChange }) => (
-  <>
-    <label htmlFor="textarea-field">
-      Fill in URL to see preview
-    </label>
-    <textarea
-      id="textarea-field"
-      rows={5}
-      onChange={onChange}
-      className="textarea-field"
-      autoFocus
-    />
-  </>
+const TextareaField = ({ onChange, placeholder }) => (
+  <textarea
+    rows={5}
+    onChange={onChange}
+    className="textarea-field"
+    placeholder={placeholder}
+    autoFocus
+  />
 );
 
 export default TextareaField;

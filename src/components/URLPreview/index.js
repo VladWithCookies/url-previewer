@@ -16,24 +16,24 @@ const URLPreview = ({
     className="url-preview"
     rel="noopener noreferrer"
   >
-    <article>
-      <img
-        className="url-preview__image"
-        src={image}
-        alt=""
-      />
-      <div className="url-preview__info">
-        <p className="url-preview__info-title">
-          {title}
-        </p>
+    <img
+      className="url-preview__image"
+      src={image}
+      alt=""
+    />
+    <div className="url-preview__info">
+      <p className="url-preview__info-title">
+        {title}
+      </p>
+      {description && (
         <p className="url-preview__info-description">
           {description}
         </p>
-        <p className="url-preview__info-host">
-          {host}
-        </p>
-      </div>
-    </article>
+      )}
+      <p className="url-preview__info-host">
+        {host}
+      </p>
+    </div>
   </a>
 );
 
