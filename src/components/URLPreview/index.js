@@ -29,7 +29,7 @@ const URLPreview = ({
         <p className="url-preview__info-description">
           {description}
         </p>
-        <p className="url-preview__info-link">
+        <p className="url-preview__info-host">
           {host}
         </p>
       </div>

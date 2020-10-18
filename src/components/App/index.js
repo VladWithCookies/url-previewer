@@ -22,9 +22,7 @@ const App = () => {
 
       const promises = reduce(parsedHosts, (accumulator, host) => {
         if (!previewsCache[host]) {
-          const promise = getMetadata(`${PROXY_URL}/${host}`);
-
-          accumulator.push(promise);
+          accumulator.push(getMetadata(`${PROXY_URL}/${host}`));
         }
 
         return accumulator;
