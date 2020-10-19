@@ -8,10 +8,12 @@ import parseHost from '../../utils/parseHost';
 import TextareaField from '../TextareaField';
 import URLPreviewList from '../URLPreviewList';
 import Loader from '../Loader';
+import Error from '../Error';
 import './styles.css';
 
 const App = () => {
   const [hosts, setHosts] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [previewsCache, setPreviewsCache] = useState({});
   const previews = pick(previewsCache, JSON.parse(hosts));
@@ -28,6 +30,7 @@ const App = () => {
         return accumulator;
       }, []);
 
+      setError(null);
       setLoading(true);
 
       try {
@@ -35,8 +38,8 @@ const App = () => {
         const previews = parseUrlPreviews(metadata);
 
         setPreviewsCache(state => ({ ...state, ...previews }));
-      } catch (error) {
-        console.log('Sorry, but something went wrong: ', error);
+      } catch ({ Error: error }) {
+        setError(error);
       }
 
       setLoading(false);
@@ -67,6 +70,7 @@ const App = () => {
       />
       {!isEmpty(previews) && <URLPreviewList previews={previews} />}
       {isLoading && <Loader />}
+      {error && <Error error={error} />}
     </div>
   );
 }
