@@ -8,6 +8,7 @@ https://vladwithcookies.github.io/url-previewer/
 
 ## Challenges
 * It is not so fun to use `debounce` with `React` hooks ;)
+* It was nice to try hooks one more time (in my current projects class components are still common approach)
 
 ## TODO
 * Better error handling
